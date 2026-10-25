@@ -43,3 +43,7 @@ The integration embeds the installer, registers its commands and adds a Plugin S
 `npm run refresh` imports `.iy` attachments from the community-maintained [CarlDV/InfiniteYieldPluginStore](https://github.com/CarlDV/InfiniteYieldPluginStore) directory. Download URLs are pinned to the imported Git commit. Source attribution links to original posts; plugin source is downloaded from that repository, not copied into this project. Running refresh intentionally moves to the latest catalog snapshot.
 
 Custom entries can be added to `data/custom.json` as an array using the same fields: `id`, `name`, `filename`, `description`, `author`, `category`, `version`, `updated`, `url`, `source`, and `size`. Use HTTPS download URLs and unique IDs consisting of letters, numbers, hyphens or underscores. Refresh preserves custom entries and combines them with the imported community catalog. Run refresh and build after changing custom entries.
+
+## In-game responsive layout (v1.1)
+
+The store uses Montserrat typography and 44-pixel main touch controls. Narrow screens show a full-width list, then a separate plugin detail view with Back navigation. Landscape and desktop screens retain the two-column layout. Long details and source previews scroll independently. Window resizing follows the active camera viewport. Layout geometry was checked in the Roblox client at 320x568, 390x844, 844x390 and 1280x720; physical mobile touch input remains untested.
