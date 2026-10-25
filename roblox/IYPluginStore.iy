@@ -20,7 +20,11 @@ local function readJSON(path, fallback)
     local ok, value = pcall(function() return Http:JSONDecode(readfile(path)) end)
     return ok and type(value) == 'table' and value or fallback
 end
-Store.Config = readJSON(configFile, {CatalogURL = ''})
+local defaultCatalogURL = 'https://raw.githubusercontent.com/DEERSTUDIO101/IY-PLUGIN-STORE/main/data/catalog.json'
+Store.Config = readJSON(configFile, {CatalogURL = defaultCatalogURL})
+if type(Store.Config.CatalogURL) ~= 'string' or Store.Config.CatalogURL == '' then
+    Store.Config.CatalogURL = defaultCatalogURL
+end
 Store.Installed = readJSON(indexFile, {})
 local function save(path, value) writefile(path, Http:JSONEncode(value)) end
 local function notify(message) if api.notify then api.notify('IY Plugin Store', tostring(message)) end end
