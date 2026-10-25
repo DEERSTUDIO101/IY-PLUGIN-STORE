@@ -1,0 +1,6 @@
+dist/
+node_modules/
+.netlify/
+*.bak
+backups/
+IY-Plugin-Store-Netlify.zip

@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
+const catalog=JSON.parse(await readFile(new URL('../data/catalog.json',import.meta.url)));
+test('catalog IDs are unique and work as IY command arguments',()=>{const ids=new Set();for(const p of catalog.plugins){assert.match(p.id,/^[\w-]+$/);assert(!ids.has(p.id));ids.add(p.id);}assert(ids.size>500);});
+test('all download URLs are immutable HTTPS .iy sources',()=>{for(const p of catalog.plugins){const url=new URL(p.url);assert.equal(url.protocol,'https:');assert.equal(url.hostname,'raw.githubusercontent.com');assert(url.pathname.includes('/'+catalog.source.commit+'/'));assert(url.pathname.toLowerCase().endsWith('.iy'));assert(p.filename.toLowerCase().endsWith('.iy'));}});
+test('build serves the same catalog and installer',async()=>{const built=JSON.parse(await readFile('dist/catalog.json'));assert.deepEqual(built,catalog);assert.equal(await readFile('dist/downloads/IYPluginStore.iy','utf8'),await readFile('roblox/IYPluginStore.iy','utf8'));});
